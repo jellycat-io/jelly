@@ -7,10 +7,10 @@
 #include <GL/glew.h>
 #include <fmt/core.h>
 
-Window::Window() {}
-Window::~Window() {}
+Jelly::Window::Window() {}
+Jelly::Window::~Window() {}
 
-int Window::create(const char *name, int width, int height, unsigned int currentFlags) {
+int Jelly::Window::create(const char *name, int width, int height, unsigned int currentFlags) {
 
 	Uint32 flags = SDL_WINDOW_OPENGL;
 
@@ -51,9 +51,11 @@ int Window::create(const char *name, int width, int height, unsigned int current
 	// Enable VSYNC
 	SDL_GL_SetSwapInterval(GL_TRUE);
 
+	Logger::Warn("Jelly Engine initialized ✔", false);
+
 	return 0;
 }
 
-void Window::swapBuffer() {
+void Jelly::Window::swapBuffer() {
 	SDL_GL_SwapWindow(_sdlWindow);
 }

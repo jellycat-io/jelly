@@ -7,7 +7,11 @@
 #include "../graphics/GLTexture.h"
 #include <string>
 
-class ImageLoader {
-public:
-	static GLTexture LoadPNG(const std::string &filepath);
-};
+namespace Jelly {
+
+	class ImageLoader {
+	public:
+		static GLTexture LoadPNG(const std::string &filepath);
+	};
+
+}

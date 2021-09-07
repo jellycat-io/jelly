@@ -8,23 +8,26 @@
 #include <GL/glew.h>
 #include <string>
 
-class Sprite {
-public:
-	Sprite();
-	~Sprite();
+namespace Jelly {
+	class Sprite {
+	public:
+		Sprite();
+		~Sprite();
 
-	void init(float x, float y, float w, float h, const std::string &texturePath);
+		void init(float x, float y, float w, float h, const std::string &texturePath);
 
-	void draw();
+		void draw();
 
-private:
-	float _x{};
-	float _y{};
-	float _w{};
-	float _h{};
+	private:
+		float _x{};
+		float _y{};
+		float _w{};
+		float _h{};
 
-	GLuint _vboID;
-	GLuint _vaoID;
+		GLuint _vboID;
+		GLuint _vaoID;
 
-	GLTexture _texture{};
-};
+		GLTexture _texture{};
+	};
+
+}

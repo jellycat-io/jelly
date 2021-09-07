@@ -25,7 +25,10 @@ set(SOURCE_FILES
         src/graphics/TextureCache.cpp
         src/graphics/TextureCache.h
         src/graphics/Window.cpp
-        src/graphics/Window.h)
+        src/graphics/Window.h
+        src/Jelly.cpp
+        src/Jelly.h
+        )
 
 find_package(fmt CONFIG REQUIRED)
 find_package(sdl2 CONFIG REQUIRED)

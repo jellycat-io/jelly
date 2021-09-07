@@ -6,7 +6,7 @@
 #include "Logger.h"
 #include <fmt/core.h>
 
-bool IOManager::ReadFileToBuffer(const std::string &filename, std::vector<unsigned char> &buffer) {
+bool Jelly::IOManager::ReadFileToBuffer(const std::string &filename, std::vector<unsigned char> &buffer) {
 	std::ifstream file(filename, std::ios::binary);
 	if (file.fail()) {
 		Logger::Error(fmt::format("Failed to open {}", filename), false);
@@ -31,7 +31,7 @@ bool IOManager::ReadFileToBuffer(const std::string &filename, std::vector<unsign
 	return true;
 }
 
-void IOManager::AppendToFile(const std::string &filename, const std::string &data) {
+void Jelly::IOManager::AppendToFile(const std::string &filename, const std::string &data) {
 	std::ofstream file(filename, std::ios_base::app);
 
 	if(file.fail()) {
@@ -44,7 +44,7 @@ void IOManager::AppendToFile(const std::string &filename, const std::string &dat
 	file.close();
 }
 
-std::string IOManager::ReadFromFile(const std::string &filename) {
+std::string Jelly::IOManager::ReadFromFile(const std::string &filename) {
 	std::ifstream file(filename);
 
 	if (file.fail()) {
@@ -64,7 +64,7 @@ std::string IOManager::ReadFromFile(const std::string &filename) {
 	return data;
 }
 
-bool IOManager::RemoveFile(const std::string &filename) {
+bool Jelly::IOManager::RemoveFile(const std::string &filename) {
 	if (!std::filesystem::exists(filename)) return false;
 
 	if(remove(filename.c_str()) != 0) {

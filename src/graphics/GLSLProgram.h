@@ -8,25 +8,27 @@
 #include <string>
 #include <vector>
 
-class GLSLProgram {
-public:
-	GLSLProgram();
-	~GLSLProgram();
+namespace Jelly {
+	class GLSLProgram {
+	public:
+		GLSLProgram();
+		~GLSLProgram();
 
-	void compileShaders(const std::string& vertexShaderPath, const std::string& fragmentShaderPath);
-	void linkShaders();
-	void addAttribute(const std::string &attributeName);
-	GLint getUniformLocation(const std::string &name) const;
-	void use() const;
-	void drop() const;
+		void compileShaders(const std::string& vertexShaderPath, const std::string& fragmentShaderPath);
+		void linkShaders();
+		void addAttribute(const std::string &attributeName);
+		GLint getUniformLocation(const std::string &name) const;
+		void use() const;
+		void drop() const;
 
-private:
-	void _checkShader(GLuint _shaderID);
-	void _compileShader(const std::string &filepath, GLuint shaderID);
+	private:
+		void _checkShader(GLuint _shaderID);
+		void _compileShader(const std::string &filepath, GLuint shaderID);
 
-private:
-	GLuint _numAttributes;
-	GLuint _programID;
-	GLuint _vertexShaderID;
-	GLuint _fragmentShaderID;
-};
+	private:
+		GLuint _numAttributes;
+		GLuint _programID;
+		GLuint _vertexShaderID;
+		GLuint _fragmentShaderID;
+	};
+}

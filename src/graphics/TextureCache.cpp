@@ -7,10 +7,10 @@
 #include "../utils/Logger.h"
 #include <fmt/core.h>
 
-TextureCache::TextureCache()=default;
-TextureCache::~TextureCache()=default;
+Jelly::TextureCache::TextureCache()=default;
+Jelly::TextureCache::~TextureCache()=default;
 
-GLTexture TextureCache::getTexture(const std::string &texturePath) {
+Jelly::GLTexture Jelly::TextureCache::getTexture(const std::string &texturePath) {
 	// Lookup the texture
 	auto mit = _textureMap.find(texturePath);
 

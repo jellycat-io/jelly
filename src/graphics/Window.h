@@ -6,21 +6,23 @@
 
 #include <SDL.h>
 
-enum WindowFlags { INVISIBLE = 0x1, FULLSCREEN = 0x2, BORDERLESS = 0x4 };
+namespace Jelly {
+	enum WindowFlags { INVISIBLE = 0x1, FULLSCREEN = 0x2, BORDERLESS = 0x4 };
 
-class Window {
-public:
-	Window();
-	~Window();
+	class Window {
+	public:
+		Window();
+		~Window();
 
-	int create(const char *name, int width, int height, unsigned int currentFlags);
+		int create(const char *name, int width, int height, unsigned int currentFlags);
 
-	int getWidth() const { return _width; }
-	int getHeight() const { return _height; }
+		int getWidth() const { return _width; }
+		int getHeight() const { return _height; }
 
-	void swapBuffer();
+		void swapBuffer();
 
-private:
-	SDL_Window* _sdlWindow;
-	int _width, _height;
-};
+	private:
+		SDL_Window* _sdlWindow;
+		int _width, _height;
+	};
+}

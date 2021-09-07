@@ -6,14 +6,14 @@
 #include "Sprite.h"
 #include "Vertex.h"
 
-Sprite::Sprite() : _vboID(0), _vaoID(0) {}
+Jelly::Sprite::Sprite() : _vboID(0), _vaoID(0) {}
 
-Sprite::~Sprite() {
+Jelly::Sprite::~Sprite() {
 	if (_vboID != 0) glDeleteBuffers(1, &_vboID);
 	if (_vaoID != 0) glDeleteVertexArrays(1, &_vaoID);
 }
 
-void Sprite::init(float x, float y, float w, float h, const std::string &texturePath) {
+void Jelly::Sprite::init(float x, float y, float w, float h, const std::string &texturePath) {
 	_x = x;
 	_y = y;
 	_w = w;
@@ -58,7 +58,7 @@ void Sprite::init(float x, float y, float w, float h, const std::string &texture
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void Sprite::draw() {
+void Jelly::Sprite::draw() {
 	glBindTexture(GL_TEXTURE_2D, _texture.id);
 
 	glGenVertexArrays(1, &_vaoID);

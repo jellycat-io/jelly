@@ -9,11 +9,11 @@
 #include <fmt/core.h>
 #include <vector>
 
-GLSLProgram::GLSLProgram() : _numAttributes(0), _programID(0), _vertexShaderID(0), _fragmentShaderID(0) {}
-GLSLProgram::~GLSLProgram()=default;
+Jelly::GLSLProgram::GLSLProgram() : _numAttributes(0), _programID(0), _vertexShaderID(0), _fragmentShaderID(0) {}
+Jelly::GLSLProgram::~GLSLProgram()=default;
 
 // Create shaders and compile them.
-void GLSLProgram::compileShaders(const std::string &vertexShaderPath, const std::string &fragmentShaderPath) {
+void Jelly::GLSLProgram::compileShaders(const std::string &vertexShaderPath, const std::string &fragmentShaderPath) {
 	_programID = glCreateProgram();
 
 	_vertexShaderID = glCreateShader(GL_VERTEX_SHADER);
@@ -33,7 +33,7 @@ void GLSLProgram::compileShaders(const std::string &vertexShaderPath, const std:
 }
 
 // Link shaders into a program.
-void GLSLProgram::linkShaders() {
+void Jelly::GLSLProgram::linkShaders() {
 	// Attach shaders to te program
 	glAttachShader(_programID, _vertexShaderID);
 	glAttachShader(_programID, _fragmentShaderID);
@@ -68,11 +68,11 @@ void GLSLProgram::linkShaders() {
 	glDeleteShader(_fragmentShaderID);
 }
 
-void GLSLProgram::addAttribute(const std::string &attributeName) {
+void Jelly::GLSLProgram::addAttribute(const std::string &attributeName) {
 	glBindAttribLocation(_programID, _numAttributes++, attributeName.c_str());
 }
 
-GLint GLSLProgram::getUniformLocation(const std::string &name) const {
+GLint Jelly::GLSLProgram::getUniformLocation(const std::string &name) const {
 	GLint location = glGetUniformLocation(_programID, name.c_str());
 	if (location == GL_INVALID_INDEX) {
 		Logger::Error(fmt::format("Uniform {} not found in shader", name));
@@ -80,7 +80,7 @@ GLint GLSLProgram::getUniformLocation(const std::string &name) const {
 	return location;
 }
 
-void GLSLProgram::use() const {
+void Jelly::GLSLProgram::use() const {
 	glUseProgram(_programID);
 
 	for (int i = 0; i < _numAttributes; i++) {
@@ -88,7 +88,7 @@ void GLSLProgram::use() const {
 	}
 }
 
-void GLSLProgram::drop() const {
+void Jelly::GLSLProgram::drop() const {
 	glUseProgram(0);
 
 	for (int i = 0; i < _numAttributes; i++) {
@@ -97,7 +97,7 @@ void GLSLProgram::drop() const {
 }
 
 // Checks if a shader compiles correctly.
-void GLSLProgram::_checkShader(GLuint _shaderID) {
+void Jelly::GLSLProgram::_checkShader(GLuint _shaderID) {
 	GLint success = 0;
 	glGetShaderiv(_shaderID, GL_COMPILE_STATUS, &success);
 
@@ -119,7 +119,7 @@ void GLSLProgram::_checkShader(GLuint _shaderID) {
 }
 
 // Gets shader code from file and compiles it.
-void GLSLProgram::_compileShader(const std::string &filepath, GLuint shaderID) {
+void Jelly::GLSLProgram::_compileShader(const std::string &filepath, GLuint shaderID) {
 	// Convert shader file into a string
 	std::string shaderData = IOManager::ReadFromFile(filepath);
 	const char* shaderDataPtr = shaderData.c_str();

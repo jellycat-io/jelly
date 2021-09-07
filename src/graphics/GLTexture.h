@@ -5,8 +5,10 @@
 
 #include <GL/glew.h>
 
-struct GLTexture {
-	GLuint id;
-	GLint width;
-	GLint height;
-};
+namespace Jelly {
+	struct GLTexture {
+		GLuint id;
+		GLint width;
+		GLint height;
+	};
+}

@@ -9,7 +9,7 @@
 #include <fmt/core.h>
 
 
-GLTexture ImageLoader::LoadPNG(const std::string &filepath) {
+Jelly::GLTexture Jelly::ImageLoader::LoadPNG(const std::string &filepath) {
 	GLTexture texture = {};
 
 	std::vector<unsigned char> in;

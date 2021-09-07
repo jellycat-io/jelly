@@ -4,8 +4,8 @@
 
 #include "ResourceManager.h"
 
-TextureCache ResourceManager::_textureCache;
+Jelly::TextureCache Jelly::ResourceManager::_textureCache;
 
-GLTexture ResourceManager::GetTexture(const std::string &texturePath) {
+Jelly::GLTexture Jelly::ResourceManager::GetTexture(const std::string &texturePath) {
 	return _textureCache.getTexture(texturePath);
 }

@@ -6,10 +6,12 @@
 
 #include "../graphics/TextureCache.h"
 
-class ResourceManager {
-public:
-	static GLTexture GetTexture(const std::string &texturePath);
+namespace Jelly {
+	class ResourceManager {
+	public:
+		static GLTexture GetTexture(const std::string &texturePath);
 
-private:
-	static TextureCache _textureCache;
-};
+	private:
+		static TextureCache _textureCache;
+	};
+}
