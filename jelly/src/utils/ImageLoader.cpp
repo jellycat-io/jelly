@@ -2,10 +2,10 @@
 // Created by Maxime Blanc on 06/09/2021.
 //
 
-#include "../vendors/picoPNG.h"
 #include "ImageLoader.h"
 #include "IOManager.h"
 #include "Logger.h"
+#include "jelly/src/vendors/picoPNG.h"
 #include <fmt/core.h>
 
 

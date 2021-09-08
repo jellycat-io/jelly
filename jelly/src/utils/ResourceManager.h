@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "../graphics/TextureCache.h"
+#include "jelly/src/graphics/TextureCache.h"
 
 namespace Jelly {
 	class ResourceManager {

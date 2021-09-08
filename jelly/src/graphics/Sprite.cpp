@@ -2,9 +2,9 @@
 // Created by Maxime Blanc on 06/09/2021.
 //
 
-#include "../utils/ResourceManager.h"
 #include "Sprite.h"
 #include "Vertex.h"
+#include "jelly/src/utils/ResourceManager.h"
 
 Jelly::Sprite::Sprite() : _vboID(0), _vaoID(0) {}
 

@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "../graphics/GLTexture.h"
+#include "jelly/src/graphics/GLTexture.h"
 #include <string>
 
 namespace Jelly {

@@ -1,0 +1,14 @@
+# Compute paths
+get_filename_component(JELLY_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
+set(JELLY_INCLUDE_DIRS "@CONF_INCLUDE_DIRS@")
+
+message("${JELLY_CMAKE_DIR}")
+
+# Our library dependencies (contains definitions for IMPORTED targets)
+if(NOT TARGET foo AND NOT Jelly_BINARY_DIR)
+  include("${JELLY_CMAKE_DIR}/JellyTargets.cmake")
+endif()
+
+# These are IMPORTED targets created by JellyTargets.cmake
+set(JELLY_LIBRARIES jelly)
+set(JELLY_EXECUTABLE jelly_example)

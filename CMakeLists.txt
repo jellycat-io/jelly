@@ -1,114 +1,67 @@
 cmake_minimum_required(VERSION 3.20)
 project(Jelly)
 
-set(CMAKE_BUILD_TYPE Release)
-
-include(GNUInstallDirs)
+set(JELLY_MAJOR_VERSION 0)
+set(JELLY_MINOR_VERSION 1)
+set(JELLY_PATCH_VERSION 0)
+set(JELLY_VERSION
+        ${JELLY_MAJOR_VERSION}.${JELLY_MINOR_VERSION}.${JELLY_PATCH_VERSION})
 
 set(CMAKE_CXX_STANDARD 20)
 
-set(SOURCE_FILES
-        src/utils/Logger.cpp
-        src/utils/IOManager.cpp
-        src/utils/Palette.cpp
-        src/graphics/Sprite.cpp
-        src/graphics/GLSLProgram.cpp
-        src/vendors/picoPNG.cpp
-        src/utils/ImageLoader.cpp
-        src/utils/ResourceManager.cpp
-        src/graphics/TextureCache.cpp
-        src/graphics/Window.cpp
-        src/Jelly.cpp
-)
+set(INSTALL_LIB_DIR lib CACHE PATH "Installation directory for libraries")
+set(INSTALL_BIN_DIR bin CACHE PATH "Installation directory for executables")
+set(INSTALL_INCLUDE_DIR include CACHE PATH "Installation directory for header files")
 
-find_package(fmt CONFIG REQUIRED)
-find_package(sdl2 CONFIG REQUIRED)
-find_package(sdl2-image CONFIG REQUIRED)
-find_package(sdl2-ttf CONFIG REQUIRED)
-find_package(GLEW REQUIRED)
+if(WIN32 AND NOT CYGWIN)
+    set(DEF_INSTALL_CMAKE_DIR CMake)
+else()
+    set(DEF_INSTALL_CMAKE_DIR lib/CMake/Jelly)
+endif()
+set(INSTALL_CMAKE_DIR ${DEF_INSTALL_CMAKE_DIR} CACHE PATH "Installation directory for CMake files")
 
-add_library(${PROJECT_NAME} STATIC ${SOURCE_FILES})
 
-target_link_libraries(${PROJECT_NAME}
-        PUBLIC
-        fmt::fmt
-        SDL2::SDL2
-        SDL2::SDL2_image
-        SDL2::SDL2_ttf
-        GLEW::GLEW
-        "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>"
-)
+# Make relative paths absolute
+foreach(p LIB BIN INCLUDE CMAKE)
+    set(var INSTALL_${p}_DIR)
+    if(NOT IS_ABSOLUTE "${${var}}")
+        set(${var} "${CMAKE_INSTALL_PREFIX}/${${var}}")
+    endif()
+endforeach()
 
-install(
-        TARGETS ${PROJECT_NAME}
-        EXPORT ${PROJECT_NAME}Targets
-        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-        INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-)
+include_directories(
+        "${PROJECT_SOURCE_DIR}"
+        "${PROJECT_BINARY_DIR}")
 
-set(HEADER_FILES
-        src/utils/Logger.h
-        src/utils/IOManager.h
-        src/utils/ImageLoader.h
-        src/utils/ResourceManager.h
-        src/utils/Palette.h
-        src/graphics/Sprite.h
-        src/graphics/GLSLProgram.h
-        src/graphics/Vertex.h
-        src/graphics/GLTexture.h
-        src/graphics/TextureCache.h
-        src/graphics/Window.h
-        src/vendors/picoPNG.h
-        src/Jelly.h
-)
+add_subdirectory(jelly)
+add_subdirectory(jelly_example)
 
-install(FILES ${HEADER_FILES} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+export(TARGETS jelly jelly_example
+        FILE ${PROJECT_BINARY_DIR}/JellyTargets.cmake)
 
-install(
-        EXPORT ${PROJECT_NAME}Targets
-        FILE ${PROJECT_NAME}Targets.cmake
-        NAMESPACE ${PROJECT_NAME}::
-        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
-)
+export(PACKAGE Jelly)
 
-include(CMakeFindDependencyMacro)
-find_dependency(fmt)
-find_dependency(sdl2)
-find_dependency(sdl2-image)
-find_dependency(sdl2-ttf)
-find_dependency(GLEW)
+message("${INSTALL_CMAKE_DIR}")
 
-include(CMakePackageConfigHelpers)
+file(RELATIVE_PATH REL_INCLUDE_DIR "${INSTALL_CMAKE_DIR}"
+        "${INSTALL_INCLUDE_DIR}")
 
-set(version 0.0.1)
+set(CONF_INCLUDE_DIRS "${PROJECT_SOURCE_DIR}" "${PROJECT_BINARY_DIR}")
+configure_file(JellyConfig.cmake.in
+        "${PROJECT_BINARY_DIR}/JellyConfig.cmake" @ONLY)
 
-set_property(TARGET ${PROJECT_NAME} PROPERTY VERSION ${version})
-set_property(TARGET ${PROJECT_NAME} PROPERTY SOVERSION 0)
-set_property(TARGET ${PROJECT_NAME} PROPERTY INTERFACE_${PROJECT_NAME}_MAJOR_VERSION 0)
-set_property(TARGET ${PROJECT_NAME} APPEND PROPERTY COMPATIBLE_INTERFACE_STRING ${PROJECT_NAME}_MAJOR_VERSION)
+set(CONF_INCLUDE_DIRS "\${JELLY_CMAKE_DIR}/${REL_INCLUDE_DIR}")
+configure_file(JellyConfig.cmake.in
+        "${PROJECT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/JellyConfig.cmake" @ONLY)
 
-write_basic_package_version_file(
-        "${CMAKE_CURRENT_BINARY_DIR}/JellyConfigVersion.cmake"
-        VERSION "${version}"
-        COMPATIBILITY AnyNewerVersion
-)
-
-configure_package_config_file(
-        ${CMAKE_CURRENT_SOURCE_DIR}/Config.cmake.in
-        "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
-        INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
-)
+configure_file(JellyConfigVersion.cmake.in
+        "${PROJECT_BINARY_DIR}/JellyConfigVersion.cmake" @ONLY)
 
 install(FILES
-        "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
-        "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake"
-        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
-)
+        "${PROJECT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/JellyConfig.cmake"
+        "${PROJECT_BINARY_DIR}/JellyConfigVersion.cmake"
+        DESTINATION "${INSTALL_CMAKE_DIR}" COMPONENT dev)
 
-export(
-        EXPORT ${PROJECT_NAME}Targets
-        FILE "${CMAKE_CURRENT_BINARY_DIR}/cmake/${PROJECT_NAME}Targets.cmake"
-        NAMESPACE ${PROJECT_NAME}::
-)
+install(
+        EXPORT JellyTargets
+        DESTINATION "${INSTALL_CMAKE_DIR}" COMPONENT dev)

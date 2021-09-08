@@ -3,8 +3,8 @@
 //
 
 #include "TextureCache.h"
-#include "../utils/ImageLoader.h"
-#include "../utils/Logger.h"
+#include "jelly/src/utils/ImageLoader.h"
+#include "jelly/src/utils/Logger.h"
 #include <fmt/core.h>
 
 Jelly::TextureCache::TextureCache()=default;
