@@ -1,5 +1,5 @@
 /build/
 /debug/
 /vcpkg_installed/
-
+/install/
 .DS_Store

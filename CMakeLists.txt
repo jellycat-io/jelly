@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.20)
 project(Jelly)
 
+set(CMAKE_BUILD_TYPE Release)
+
 include(GNUInstallDirs)
 
 set(CMAKE_CXX_STANDARD 20)
@@ -34,13 +36,12 @@ target_link_libraries(${PROJECT_NAME}
         SDL2::SDL2_image
         SDL2::SDL2_ttf
         GLEW::GLEW
-        "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>"
         "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>"
 )
 
 install(
-        TARGETS Jelly
-        EXPORT JellyTargets
+        TARGETS ${PROJECT_NAME}
+        EXPORT ${PROJECT_NAME}Targets
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
@@ -66,10 +67,10 @@ set(HEADER_FILES
 install(FILES ${HEADER_FILES} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
 install(
-        EXPORT JellyTargets
-        FILE JellyTargets.cmake
-        NAMESPACE Jelly::
-        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/Jelly
+        EXPORT ${PROJECT_NAME}Targets
+        FILE ${PROJECT_NAME}Targets.cmake
+        NAMESPACE ${PROJECT_NAME}::
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
 )
 
 include(CMakeFindDependencyMacro)
@@ -83,10 +84,10 @@ include(CMakePackageConfigHelpers)
 
 set(version 0.0.1)
 
-set_property(TARGET Jelly PROPERTY VERSION ${version})
-set_property(TARGET Jelly PROPERTY SOVERSION 0)
-set_property(TARGET Jelly PROPERTY INTERFACE_Jelly_MAJOR_VERSION 0)
-set_property(TARGET Jelly APPEND PROPERTY COMPATIBLE_INTERFACE_STRING Jelly_MAJOR_VERSION)
+set_property(TARGET ${PROJECT_NAME} PROPERTY VERSION ${version})
+set_property(TARGET ${PROJECT_NAME} PROPERTY SOVERSION 0)
+set_property(TARGET ${PROJECT_NAME} PROPERTY INTERFACE_${PROJECT_NAME}_MAJOR_VERSION 0)
+set_property(TARGET ${PROJECT_NAME} APPEND PROPERTY COMPATIBLE_INTERFACE_STRING ${PROJECT_NAME}_MAJOR_VERSION)
 
 write_basic_package_version_file(
         "${CMAKE_CURRENT_BINARY_DIR}/JellyConfigVersion.cmake"
@@ -96,18 +97,18 @@ write_basic_package_version_file(
 
 configure_package_config_file(
         ${CMAKE_CURRENT_SOURCE_DIR}/Config.cmake.in
-        "${CMAKE_CURRENT_BINARY_DIR}/JellyConfig.cmake"
-        INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/Jelly
+        "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
+        INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
 )
 
 install(FILES
-        "${CMAKE_CURRENT_BINARY_DIR}/JellyConfig.cmake"
-        "${CMAKE_CURRENT_BINARY_DIR}/JellyConfigVersion.cmake"
-        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/Jelly
+        "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
+        "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake"
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
 )
 
 export(
-        EXPORT JellyTargets
-        FILE "${CMAKE_CURRENT_BINARY_DIR}/cmake/JellyTargets.cmake"
-        NAMESPACE Jelly::
+        EXPORT ${PROJECT_NAME}Targets
+        FILE "${CMAKE_CURRENT_BINARY_DIR}/cmake/${PROJECT_NAME}Targets.cmake"
+        NAMESPACE ${PROJECT_NAME}::
 )
