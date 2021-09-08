@@ -23,4 +23,4 @@ target_link_libraries(jelly_example
 
 install(TARGETS jelly_example
         EXPORT JellyTargets
-        RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}" COMPONENT bin)
+        RUNTIME DESTINATION "${INSTALL_BIN_DIR}" COMPONENT bin)
