@@ -10,9 +10,11 @@ out vec4 frag_color;
 out vec2 frag_position;
 out vec2 frag_uv;
 
+uniform mat4 P;
+
 void main() {
     // Set the x,y position on the screen.
-    gl_Position.xy = position;
+    gl_Position.xy = (P * vec4(position.x, position.y, 0.0, 1)).xy;
     // Z is zero because 2D.
     gl_Position.z = 0.0;
     // Coordinates are normalized.

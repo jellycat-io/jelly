@@ -19,6 +19,8 @@ void Engine::_init() {
 
 	_window.create("jelly Engine", _screenWidth, _screenHeight, 0);
 
+	_camera.init(_screenWidth, _screenHeight);
+
 	_initShaders();
 }
 
@@ -36,13 +38,13 @@ void Engine::run() {
 	_init();
 
 	_sprites.push_back(new Jelly::Sprite());
-	_sprites.back()->init(-1.0f, 0.0f, 1.0f, 1.0f, "textures/Celestial_Beatrix.png");
+	_sprites.back()->init(0.0f, (float) _screenHeight / 2, (float) _screenWidth / 2, (float) _screenHeight / 2, "textures/Celestial_Beatrix.png");
 	_sprites.push_back(new Jelly::Sprite());
-	_sprites.back()->init(0.0f, 0.0f, 1.0f, 1.0f, "textures/Celestial_Beatrix.png");
+	_sprites.back()->init((float) _screenWidth / 2, (float) _screenHeight / 2, (float)_screenWidth / 2, (float) _screenHeight / 2, "textures/Celestial_Beatrix.png");
 	_sprites.push_back(new Jelly::Sprite());
-	_sprites.back()->init(-1.0f, -1.0f, 1.0f, 1.0f, "textures/Boss_Feral_Kitsune.png");
+	_sprites.back()->init(0.0f, 0.0f, (float) _screenWidth / 2, (float) _screenHeight / 2, "textures/Boss_Feral_Kitsune.png");
 	_sprites.push_back(new Jelly::Sprite());
-	_sprites.back()->init(0.0f, -1.0f, 1.0f, 1.0f, "textures/Boss_Feral_Kitsune.png");
+	_sprites.back()->init((float) _screenWidth / 2, 0.0f, (float) _screenWidth / 2, (float) _screenHeight / 2, "textures/Boss_Feral_Kitsune.png");
 
 	_update();
 }
@@ -54,6 +56,9 @@ void Engine::_update() {
 
 		_processInput();
 		_time += 0.1;
+
+		_camera.update();
+
 		_draw();
 		_calculateFPS();
 		_printFPS();
@@ -81,6 +86,11 @@ void Engine::_draw() {
 	GLint timeLocation = _shaderProgram.getUniformLocation("time");
 	glUniform1f(timeLocation, _time);
 
+	// Set the camera matrix
+	GLint pLocation = _shaderProgram.getUniformLocation("P");
+	glm::mat4 cameraMatrix = _camera.getCameraMatrix();
+	glUniformMatrix4fv(pLocation, 1, GL_FALSE, &(cameraMatrix[0][0]));
+
 	for (auto &sprite : _sprites) {
 		sprite->draw();
 	}
@@ -94,11 +104,37 @@ void Engine::_draw() {
 
 void Engine::_processInput() {
 	SDL_Event e;
+	const float CAMERA_SPEED = 20.0f;
+	const float SCALE_SPEED = 0.1f;
 
 	while (SDL_PollEvent(&e)) {
 		switch (e.type) {
 			case SDL_QUIT:
 				_gameState = GameState::EXIT;
+				break;
+			case SDL_KEYDOWN:
+				switch(e.key.keysym.sym) {
+					case SDLK_w:
+						_camera.setPosition(_camera.getPosition() + glm::vec2(0.0f, CAMERA_SPEED));
+						break;
+					case SDLK_s:
+						_camera.setPosition(_camera.getPosition() + glm::vec2(0.0f, -CAMERA_SPEED));
+						break;
+					case SDLK_a:
+						_camera.setPosition(_camera.getPosition() + glm::vec2(-CAMERA_SPEED, 0.0f));
+						break;
+					case SDLK_d:
+						_camera.setPosition(_camera.getPosition() + glm::vec2(CAMERA_SPEED, 0.0f));
+						break;
+					case SDLK_q:
+						_camera.setScale(_camera.getScale() - SCALE_SPEED);
+						break;
+					case SDLK_e:
+						_camera.setScale(_camera.getScale() + SCALE_SPEED);
+						break;
+					default:
+						break;
+				}
 				break;
 		}
 	}

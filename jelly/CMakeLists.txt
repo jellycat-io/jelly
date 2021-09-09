@@ -3,6 +3,7 @@ find_package(sdl2 CONFIG REQUIRED)
 find_package(sdl2-image CONFIG REQUIRED)
 find_package(sdl2-ttf CONFIG REQUIRED)
 find_package(GLEW REQUIRED)
+find_package(glm CONFIG REQUIRED)
 
 set(SOURCE_FILES
         src/utils/Logger.cpp
@@ -15,8 +16,8 @@ set(SOURCE_FILES
         src/utils/ResourceManager.cpp
         src/graphics/TextureCache.cpp
         src/graphics/Window.cpp
-        src/Jelly.cpp
-        )
+        src/graphics/Camera2D.cpp
+        src/Jelly.cpp)
 
 set(HEADER_FILES
         src/utils/Logger.h
@@ -30,9 +31,9 @@ set(HEADER_FILES
         src/graphics/GLTexture.h
         src/graphics/TextureCache.h
         src/graphics/Window.h
+        src/graphics/Camera2D.h
         src/vendors/picoPNG.h
-        src/Jelly.h
-        )
+        src/Jelly.h)
 
 add_library(jelly SHARED ${SOURCE_FILES})
 
@@ -41,7 +42,8 @@ target_link_libraries(jelly PRIVATE
         SDL2::SDL2
         SDL2::SDL2_image
         SDL2::SDL2_ttf
-        GLEW::GLEW)
+        GLEW::GLEW
+        glm::glm)
 
 set_target_properties(jelly PROPERTIES
         PUBLIC_HEADER "${HEADER_FILES}")

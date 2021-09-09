@@ -3,6 +3,7 @@ find_package(sdl2 CONFIG REQUIRED)
 find_package(sdl2-image CONFIG REQUIRED)
 find_package(sdl2-ttf CONFIG REQUIRED)
 find_package(GLEW REQUIRED)
+find_package(glm CONFIG REQUIRED)
 
 set(SOURCE_FILES
         src/core/Engine.cpp
@@ -19,7 +20,8 @@ target_link_libraries(jelly_example
         SDL2::SDL2
         SDL2::SDL2_image
         SDL2::SDL2_ttf
-        GLEW::GLEW)
+        GLEW::GLEW
+        glm::glm)
 
 install(TARGETS jelly_example
         EXPORT JellyTargets

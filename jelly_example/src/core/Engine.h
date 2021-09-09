@@ -6,6 +6,7 @@
 
 #include <GL/glew.h>
 #include <SDL.h>
+#include <jelly/src/graphics/Camera2D.h>
 #include <jelly/src/graphics/GLSLProgram.h>
 #include <jelly/src/graphics/Sprite.h>
 #include <jelly/src/graphics/Window.h>
@@ -28,6 +29,7 @@ private:
 	float _maxFPS;
 	float _fps{};
 	float _frameTime{};
+	Jelly::Camera2D _camera{};
 
 public:
 	Engine();
