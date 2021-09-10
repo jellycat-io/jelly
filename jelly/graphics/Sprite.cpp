@@ -4,7 +4,7 @@
 
 #include "Sprite.h"
 #include "Vertex.h"
-#include "jelly/src/utils/ResourceManager.h"
+#include "jelly/utils/ResourceManager.h"
 
 Jelly::Sprite::Sprite() : _vboID(0), _vaoID(0) {}
 
@@ -61,32 +61,6 @@ void Jelly::Sprite::init(float x, float y, float w, float h, const std::string &
 void Jelly::Sprite::draw() {
 	glBindTexture(GL_TEXTURE_2D, _texture.id);
 
-	glGenVertexArrays(1, &_vaoID);
-	glBindVertexArray(_vaoID);
-
-	// Bind the buffer object
-	glBindBuffer(GL_ARRAY_BUFFER, _vboID);
-
-	// Tell OpenGL to use the first attribute array, for now
-	glEnableVertexAttribArray(0);
-	glEnableVertexAttribArray(1);
-	glEnableVertexAttribArray(2);
-
-	// Position attribute pointer
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *)offsetof(Vertex, position));
-	// Color attribute pointer
-	glVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(Vertex), (void *)offsetof(Vertex, color));
-	// UV attribute pointer
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *) offsetof(Vertex, uv));
-
 	// Draw vertices to the screen
 	glDrawArrays(GL_TRIANGLES, 0, 6);
-
-	// Disable vertex attrib array. Not optional
-	glDisableVertexAttribArray(0);
-	glDisableVertexAttribArray(1);
-	glDisableVertexAttribArray(2);
-
-	// Unbind the VBO
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }

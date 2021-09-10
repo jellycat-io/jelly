@@ -4,7 +4,9 @@
 
 #include "Engine.h"
 #include <fmt/core.h>
-#include <jelly/src/utils/Logger.h>
+#include <jelly/graphics/Color.h>
+#include <jelly/utils/Logger.h>
+#include <jelly/utils/ResourceManager.h>
 
 Engine::Engine() : _gameState(GameState::PLAY),
                    _screenWidth(1024),
@@ -22,6 +24,8 @@ void Engine::_init() {
 	_camera.init(_screenWidth, _screenHeight);
 
 	_initShaders();
+
+	_spriteBatch.init();
 }
 
 void Engine::_initShaders() {
@@ -36,16 +40,6 @@ void Engine::_initShaders() {
 
 void Engine::run() {
 	_init();
-
-	_sprites.push_back(new Jelly::Sprite());
-	_sprites.back()->init(0.0f, (float) _screenHeight / 2, (float) _screenWidth / 2, (float) _screenHeight / 2, "textures/Celestial_Beatrix.png");
-	_sprites.push_back(new Jelly::Sprite());
-	_sprites.back()->init((float) _screenWidth / 2, (float) _screenHeight / 2, (float)_screenWidth / 2, (float) _screenHeight / 2, "textures/Celestial_Beatrix.png");
-	_sprites.push_back(new Jelly::Sprite());
-	_sprites.back()->init(0.0f, 0.0f, (float) _screenWidth / 2, (float) _screenHeight / 2, "textures/Boss_Feral_Kitsune.png");
-	_sprites.push_back(new Jelly::Sprite());
-	_sprites.back()->init((float) _screenWidth / 2, 0.0f, (float) _screenWidth / 2, (float) _screenHeight / 2, "textures/Boss_Feral_Kitsune.png");
-
 	_update();
 }
 
@@ -83,17 +77,27 @@ void Engine::_draw() {
 	GLint textureLocation = _shaderProgram.getUniformLocation("sampler");
 	glUniform1i(textureLocation, 0);
 
-	GLint timeLocation = _shaderProgram.getUniformLocation("time");
-	glUniform1f(timeLocation, _time);
+	// GLint timeLocation = _shaderProgram.getUniformLocation("time");
+	// glUniform1f(timeLocation, _time);
 
 	// Set the camera matrix
 	GLint pLocation = _shaderProgram.getUniformLocation("P");
 	glm::mat4 cameraMatrix = _camera.getCameraMatrix();
 	glUniformMatrix4fv(pLocation, 1, GL_FALSE, &(cameraMatrix[0][0]));
 
-	for (auto &sprite : _sprites) {
-		sprite->draw();
+	_spriteBatch.begin();
+
+	glm::vec4 pos(0.0f, 0.0f, 50.0f, 50.0f);
+	glm::vec4 uv(0.0f, 0.0f, 1.0f, 1.0f);
+	static Jelly::GLTexture tex = Jelly::ResourceManager::GetTexture("textures/Boss_Feral_Kitsune.png");
+
+	for(int i = 0; i < 10000; i++) {
+		_spriteBatch.draw(pos + glm::vec4(50 * i, 0, 0, 0), uv, tex.id, 0.0f, Jelly::Color::White());
 	}
+
+	_spriteBatch.end();
+
+	_spriteBatch.renderBatch();
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 

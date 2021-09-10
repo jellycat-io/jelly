@@ -5,7 +5,7 @@
 #include "ImageLoader.h"
 #include "IOManager.h"
 #include "Logger.h"
-#include "jelly/src/vendors/picoPNG.h"
+#include "jelly/vendors/picoPNG.h"
 #include <fmt/core.h>
 
 

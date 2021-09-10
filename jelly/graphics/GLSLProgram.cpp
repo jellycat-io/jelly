@@ -3,8 +3,8 @@
 //
 
 #include "GLSLProgram.h"
-#include "jelly/src/utils/IOManager.h"
-#include "jelly/src/utils/Logger.h"
+#include "jelly/utils/IOManager.h"
+#include "jelly/utils/Logger.h"
 #include <SDL.h>
 #include <fmt/core.h>
 #include <vector>

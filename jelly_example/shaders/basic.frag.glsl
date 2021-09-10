@@ -12,11 +12,11 @@ uniform sampler2D sampler;
 
 void main() {
     vec4 texture_color = texture(sampler, frag_uv);
-    // color = texture_color * frag_color;
-    color = vec4(
+    color = texture_color * frag_color;
+    /*color = vec4(
         frag_color.r * (cos(frag_position.x * 2.0 + time) + 1.0) * 0.5,
         frag_color.g * (cos(frag_position.y * 2.0 + time) + 1.0) * 0.5,
         frag_color.b * (cos(frag_position.x * 2.0 + time) + 1.0) * 0.5,
         frag_color.a
-    ) * texture_color;
+    ) * texture_color;*/
 }

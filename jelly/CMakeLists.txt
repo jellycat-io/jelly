@@ -6,34 +6,37 @@ find_package(GLEW REQUIRED)
 find_package(glm CONFIG REQUIRED)
 
 set(SOURCE_FILES
-        src/utils/Logger.cpp
-        src/utils/IOManager.cpp
-        src/utils/Palette.cpp
-        src/graphics/Sprite.cpp
-        src/graphics/GLSLProgram.cpp
-        src/vendors/picoPNG.cpp
-        src/utils/ImageLoader.cpp
-        src/utils/ResourceManager.cpp
-        src/graphics/TextureCache.cpp
-        src/graphics/Window.cpp
-        src/graphics/Camera2D.cpp
-        src/Jelly.cpp)
+        utils/Logger.cpp
+        utils/IOManager.cpp
+        utils/Palette.cpp
+        utils/ImageLoader.cpp
+        utils/ResourceManager.cpp
+        graphics/Sprite.cpp
+        graphics/GLSLProgram.cpp
+        graphics/TextureCache.cpp
+        graphics/Window.cpp
+        graphics/Camera2D.cpp
+        graphics/SpriteBatch.cpp
+        vendors/picoPNG.cpp
+        Jelly.cpp)
 
 set(HEADER_FILES
-        src/utils/Logger.h
-        src/utils/IOManager.h
-        src/utils/ImageLoader.h
-        src/utils/ResourceManager.h
-        src/utils/Palette.h
-        src/graphics/Sprite.h
-        src/graphics/GLSLProgram.h
-        src/graphics/Vertex.h
-        src/graphics/GLTexture.h
-        src/graphics/TextureCache.h
-        src/graphics/Window.h
-        src/graphics/Camera2D.h
-        src/vendors/picoPNG.h
-        src/Jelly.h)
+        utils/Logger.h
+        utils/IOManager.h
+        utils/Palette.h
+        utils/ImageLoader.h
+        utils/ResourceManager.h
+        graphics/Sprite.h
+        graphics/GLSLProgram.h
+        graphics/Vertex.h
+        graphics/GLTexture.h
+        graphics/TextureCache.h
+        graphics/Window.h
+        graphics/Camera2D.h
+        graphics/SpriteBatch.h
+        graphics/Color.h
+        vendors/picoPNG.h
+        Jelly.h)
 
 add_library(jelly SHARED ${SOURCE_FILES})
 

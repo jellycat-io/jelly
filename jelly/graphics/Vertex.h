@@ -4,19 +4,13 @@
 
 #pragma once
 
+#include "Color.h"
 #include <GL/glew.h>
 
 namespace Jelly {
 	struct Position {
 		float x;
 		float y;
-	};
-
-	struct Color {
-		GLubyte r;
-		GLubyte g;
-		GLubyte b;
-		GLubyte a;
 	};
 
 	struct UV {
@@ -26,7 +20,7 @@ namespace Jelly {
 
 	struct Vertex {
 		Position position;
-		Color color;
+		Jelly::Color color;
 		UV uv;
 
 		void setPosition(float x, float y) {

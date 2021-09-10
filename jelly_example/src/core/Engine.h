@@ -6,10 +6,11 @@
 
 #include <GL/glew.h>
 #include <SDL.h>
-#include <jelly/src/graphics/Camera2D.h>
-#include <jelly/src/graphics/GLSLProgram.h>
-#include <jelly/src/graphics/Sprite.h>
-#include <jelly/src/graphics/Window.h>
+#include <jelly/graphics/Camera2D.h>
+#include <jelly/graphics/GLSLProgram.h>
+#include <jelly/graphics/Sprite.h>
+#include <jelly/graphics/SpriteBatch.h>
+#include <jelly/graphics/Window.h>
 #include <vector>
 
 enum class GameState {
@@ -23,13 +24,13 @@ private:
 	int _screenWidth;
 	int _screenHeight;
 	GameState _gameState;
-	std::vector<Jelly::Sprite *> _sprites;
 	Jelly::GLSLProgram _shaderProgram{};
 	float _time;
 	float _maxFPS;
 	float _fps{};
 	float _frameTime{};
 	Jelly::Camera2D _camera{};
+	Jelly::SpriteBatch _spriteBatch{};
 
 public:
 	Engine();

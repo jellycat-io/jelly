@@ -3,7 +3,7 @@
 //
 
 #include "Window.h"
-#include "jelly/src/utils/Logger.h"
+#include "jelly/utils/Logger.h"
 #include <GL/glew.h>
 #include <fmt/core.h>
 
