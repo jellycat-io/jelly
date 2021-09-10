@@ -11,6 +11,7 @@
 #include <jelly/graphics/Sprite.h>
 #include <jelly/graphics/SpriteBatch.h>
 #include <jelly/graphics/Window.h>
+#include <jelly/input/InputManager.h>
 #include <vector>
 
 enum class GameState {
@@ -31,6 +32,7 @@ private:
 	float _frameTime{};
 	Jelly::Camera2D _camera{};
 	Jelly::SpriteBatch _spriteBatch{};
+	Jelly::InputManager _inputManager{};
 
 public:
 	Engine();

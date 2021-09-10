@@ -17,6 +17,7 @@ set(SOURCE_FILES
         graphics/Window.cpp
         graphics/Camera2D.cpp
         graphics/SpriteBatch.cpp
+        input/InputManager.cpp
         vendors/picoPNG.cpp
         Jelly.cpp)
 
@@ -35,6 +36,7 @@ set(HEADER_FILES
         graphics/Camera2D.h
         graphics/SpriteBatch.h
         graphics/Color.h
+        input/InputManager.h
         vendors/picoPNG.h
         Jelly.h)
 
