@@ -9,16 +9,14 @@ set(JELLY_VERSION
 
 set(CMAKE_CXX_STANDARD 20)
 
-set(INSTALL_DIR ${CMAKE_CURRENT_SOURCE_DIR}/dist)
-
-set(INSTALL_LIB_DIR "${INSTALL_DIR}/lib" CACHE PATH "Installation directory for libraries")
-set(INSTALL_BIN_DIR "${INSTALL_DIR}/bin" CACHE PATH "Installation directory for executables")
-set(INSTALL_INCLUDE_DIR "${INSTALL_DIR}/include" CACHE PATH "Installation directory for header files")
+set(INSTALL_LIB_DIR lib CACHE PATH "Installation directory for libraries")
+set(INSTALL_BIN_DIR bin CACHE PATH "Installation directory for executables")
+set(INSTALL_INCLUDE_DIR include CACHE PATH "Installation directory for header files")
 
 if(WIN32 AND NOT CYGWIN)
-    set(DEF_INSTALL_CMAKE_DIR ${INSTALL_DIR}/Cmake)
+    set(DEF_INSTALL_CMAKE_DIR CMake)
 else()
-    set(DEF_INSTALL_CMAKE_DIR ${INSTALL_DIR}/Cmake)
+    set(DEF_INSTALL_CMAKE_DIR lib/CMake/Jelly)
 endif()
 set(INSTALL_CMAKE_DIR ${DEF_INSTALL_CMAKE_DIR} CACHE PATH "Installation directory for CMake files")
 

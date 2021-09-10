@@ -40,7 +40,7 @@ set(HEADER_FILES
         vendors/picoPNG.h
         Jelly.h)
 
-add_library(jelly SHARED ${SOURCE_FILES})
+add_library(jelly ${SOURCE_FILES})
 
 target_link_libraries(jelly PRIVATE
         fmt::fmt
